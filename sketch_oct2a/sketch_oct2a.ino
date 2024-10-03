@@ -1,6 +1,8 @@
 #include <SPI.h>
 #include <mcp2515.h>
 
+#define FRAME_SIZE 8
+
 struct can_frame canMsg;
 struct MCP2515 mcp2515(5);  // CS pin is GPIO 5
 
@@ -28,7 +30,12 @@ void loop() {
     Serial.print("CAN ID: ");
     Serial.print(toHexString(canMsg.can_id));
     Serial.print(" data: ");
-    Serial.println(canMsg.data[0]);
+    
+    for(short i = 0; i < FRAME_SIZE; i++) {
+      Serial.print(canMsg.data[i]);
+      Serial.print(" ");
+    }
+    Serial.println("");
     // if (canMsg.can_id == 0x100)  // Check if the message is from the sender
     // {
     //   int battery = (canMsg.data[0] << 8) | canMsg.data[1];  // Combine MSB and LSB
