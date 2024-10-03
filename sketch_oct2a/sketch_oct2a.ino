@@ -51,8 +51,9 @@ void loop() {
 
       case 0x100: { // battery
 
+        // Data from motec should be coming in as an integer in the 10,000s.
         int v = (canMsg.data[0] << 8) | canMsg.data[1];
-        float scaled = (float) v * 0.01;
+        float scaled = (float) v * 0.001; // move the decimal three places left
 
         Serial.print("BATTERY: ");
         Serial.print(scaled);
